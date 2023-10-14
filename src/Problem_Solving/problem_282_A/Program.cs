@@ -12,11 +12,11 @@ namespace BitPlusPlus
             for (int i = 0; i < n; i++)
             {
                 string statement = Console.ReadLine();
-                if (statement.Contains("++"))
+                if (statement == "++")
                 {
                     x++;
                 }
-                else if (statement.Contains("--"))
+                else if (statement == "--")
                 {
                     x--;
                 }
