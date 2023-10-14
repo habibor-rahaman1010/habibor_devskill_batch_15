@@ -1,0 +1,14 @@
+D:\habibor_devskill_batch_15\src\Task1\bin\Debug\net7.0\Task1.exe
+D:\habibor_devskill_batch_15\src\Task1\bin\Debug\net7.0\Task1.deps.json
+D:\habibor_devskill_batch_15\src\Task1\bin\Debug\net7.0\Task1.runtimeconfig.json
+D:\habibor_devskill_batch_15\src\Task1\bin\Debug\net7.0\Task1.dll
+D:\habibor_devskill_batch_15\src\Task1\bin\Debug\net7.0\Task1.pdb
+D:\habibor_devskill_batch_15\src\Task1\obj\Debug\net7.0\Task1.GeneratedMSBuildEditorConfig.editorconfig
+D:\habibor_devskill_batch_15\src\Task1\obj\Debug\net7.0\Task1.AssemblyInfoInputs.cache
+D:\habibor_devskill_batch_15\src\Task1\obj\Debug\net7.0\Task1.AssemblyInfo.cs
+D:\habibor_devskill_batch_15\src\Task1\obj\Debug\net7.0\Task1.csproj.CoreCompileInputs.cache
+D:\habibor_devskill_batch_15\src\Task1\obj\Debug\net7.0\Task1.dll
+D:\habibor_devskill_batch_15\src\Task1\obj\Debug\net7.0\refint\Task1.dll
+D:\habibor_devskill_batch_15\src\Task1\obj\Debug\net7.0\Task1.pdb
+D:\habibor_devskill_batch_15\src\Task1\obj\Debug\net7.0\Task1.genruntimeconfig.cache
+D:\habibor_devskill_batch_15\src\Task1\obj\Debug\net7.0\ref\Task1.dll
