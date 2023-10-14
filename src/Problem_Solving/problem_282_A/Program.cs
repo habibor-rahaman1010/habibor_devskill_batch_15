@@ -12,15 +12,16 @@ namespace BitPlusPlus
             for (int i = 0; i < n; i++)
             {
                 string statement = Console.ReadLine();
-                if (statement == "++")
+                if (statement.Contains("++"))
                 {
                     x++;
                 }
-                else if (statement == "--")
+                else if (statement.Contains("--"))
                 {
                     x--;
                 }
             }
+
             Console.WriteLine(x);
         }
     }
