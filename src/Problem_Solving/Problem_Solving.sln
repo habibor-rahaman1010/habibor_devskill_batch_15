@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "problem_546A", "problem_546_A\problem_546A.csproj", "{BACF157F-04EB-4127-851B-E0D8FA14F8EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "problem_546A", "problem_546A\problem_546A.csproj", "{BACF157F-04EB-4127-851B-E0D8FA14F8EF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "problem_71A", "problem_71_A\problem_71A.csproj", "{0418B7A5-C82F-403F-86FD-0BCAC97F1E3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "problem_71A", "problem_71A\problem_71A.csproj", "{0418B7A5-C82F-403F-86FD-0BCAC97F1E3B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "problem_282A", "problem_282_A\problem_282A.csproj", "{55B6D6A4-1AF4-4929-B9ED-45CEE01857A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "problem_282A", "problem_282A\problem_282A.csproj", "{55B6D6A4-1AF4-4929-B9ED-45CEE01857A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
