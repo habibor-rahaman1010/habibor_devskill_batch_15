@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Text.RegularExpressions;
+
 
 Console.WriteLine("Please enter the string: ");
 string input = Console.ReadLine();
@@ -13,9 +13,7 @@ static string ModifyString(string input)
     string result = Regex.Replace(input, "[^a-zA-Z0-9_ ]", "");
 
     result = result.Replace('_', ' ');
-    System.Globalization.CultureInfo cultureInfo = System.Threading.Thread.CurrentThread.CurrentCulture;
-    System.Globalization.TextInfo textInfo = cultureInfo.TextInfo;
-    result = textInfo.ToTitleCase(result.ToLower());
+    
 
     result = Regex.Replace(result, @"\s+", " ");
 
