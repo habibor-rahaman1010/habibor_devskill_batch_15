@@ -4,7 +4,7 @@ namespace Task1
 {
     public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             Console.WriteLine("Enter the input: ");
             string[] input = Console.ReadLine().Split();
@@ -15,8 +15,7 @@ namespace Task1
 
             Console.WriteLine($"{result}");
         }
-
-        static string CalculateFraction(int numerator, int denominator, int length)
+        public static string CalculateFraction(int numerator, int denominator, int length)
         {
             string result = "";
             int remainder = numerator;
