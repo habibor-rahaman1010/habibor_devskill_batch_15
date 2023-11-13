@@ -1,4 +1,5 @@
 ﻿using System;
+using Task4.Classes;
 
 namespace Task1
 {
@@ -6,7 +7,9 @@ namespace Task1
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello Programmer");
+            // here just design oop concept
+            TicTacToe game = new TicTacToe();
+            game.PlayGame();
         }
     }
 }
