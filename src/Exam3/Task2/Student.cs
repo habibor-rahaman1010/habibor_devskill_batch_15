@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Task2
 {
-    public class Student
+    public class Student : Person
     {
         public string Name { get; set; }
         public DateTime DateOfBirth { get; set; }
 
-        public string GenerateId()
+        public override string GenerateId()
         {
-            return "S" + Name;
+            return $"S-{Name.Substring(0, 3)}{DateOfBirth.Year.ToString().Substring(2)}";
         }
     }
 }
