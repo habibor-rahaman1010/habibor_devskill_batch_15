@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Task1
 {
-    public class Machine
+    public class Tractor : Machine
     {
-        public virtual void Start()
+        public override void Start()
         {
-            Console.WriteLine("Machine Started");
+            Console.WriteLine("Starting tactor....");
         }
     }
 }
