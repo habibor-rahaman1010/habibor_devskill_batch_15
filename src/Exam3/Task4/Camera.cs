@@ -6,24 +6,11 @@ using System.Threading.Tasks;
 
 namespace Task4
 {
-    public class Cannon : ICamera
+    public interface Camera
     {
-        public string Model { get; set; }
-        public string Color { get; set; }
+        string Model { get; set; }
+        string Color { get; set; }
 
-        public Cannon() : this("Default Model", "Default Color") { }
-
-        public Cannon(string model, string color)
-        {
-            Model = model;
-            Color = color;
-        }
- 
-        public Cannon(string model) : this(model, "Default Color") { }
-
-        public void TakePhoto(int width, int height)
-        {
-            Console.WriteLine($"Cannon {Model} in {Color} took photo of size: {width}x{height}");
-        }
+        void TakePhoto(int width, int height);
     }
 }

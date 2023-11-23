@@ -10,7 +10,7 @@ namespace Task1
     {
         public override void Start()
         {
-            Console.WriteLine("Starting tactor....");
+            Console.WriteLine("Tractor Started....");
         }
     }
 }

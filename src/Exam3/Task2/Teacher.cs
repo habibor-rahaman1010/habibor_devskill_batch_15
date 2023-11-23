@@ -13,7 +13,7 @@ namespace Task2
 
         public override string GenerateId()
         {
-            return $"T-{DateOfBirth.Year.ToString().Substring(2)}";
+            return $"T-{Guid.NewGuid().ToString()}";
         }
     }
 }
