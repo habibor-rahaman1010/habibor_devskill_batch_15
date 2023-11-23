@@ -6,18 +6,12 @@ using System.Threading.Tasks;
 
 namespace Task3
 {
-    public class RandomNumberGenerator
+    public static class RandomNumberGenerator
     {
-        private int _seed;
-        private Random _rand;
+        private static int _seed;
+        private static Random _rand = new Random();
 
-        public RandomNumberGenerator()
-        {
-            _seed = DateTime.Now.Microsecond;
-            _rand = new Random(_seed);
-        }
-
-        public int Generate()
+        public static int Generate()
         {
             return _rand.Next();
         }
