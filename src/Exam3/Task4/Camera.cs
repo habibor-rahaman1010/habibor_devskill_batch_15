@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Task4
 {
-    public class Cannon
+    public class Cannon : ICamera
     {
         public string Model { get; set; }
         public string Color { get; set; }
