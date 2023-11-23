@@ -11,9 +11,19 @@ namespace Task4
         public string Model { get; set; }
         public string Color { get; set; }
 
+        public Cannon() : this("Default Model", "Default Color") { }
+
+        public Cannon(string model, string color)
+        {
+            Model = model;
+            Color = color;
+        }
+ 
+        public Cannon(string model) : this(model, "Default Color") { }
+
         public void TakePhoto(int width, int height)
         {
-            Console.WriteLine($"Took photo of size: {width}x{height}");
+            Console.WriteLine($"Cannon {Model} in {Color} took photo of size: {width}x{height}");
         }
     }
 }
