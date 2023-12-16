@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PetShopInventory.Account;
+using PetShopInventory.PetsUtility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,13 @@ namespace PetShopInventory
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasData(GetUser().ToList());
+            modelBuilder.Entity<Pet>()
+                .HasOne(p => p.Cage)
+                .WithMany(c => c.PetsList)
+                .HasForeignKey(p => p.CageId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Pet>().ToTable("Pets");
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -38,5 +46,6 @@ namespace PetShopInventory
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<PetCage> PetCages { get; set; }
     }
 }
