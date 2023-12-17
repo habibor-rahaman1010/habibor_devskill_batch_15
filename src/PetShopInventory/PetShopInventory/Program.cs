@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PetShopInventory.Account;
+using PetShopInventory.PetsCURDoperation;
 using PetShopInventory.PetsUtility;
 using System;
 using System.Threading.Channels;
@@ -23,74 +24,70 @@ namespace PetShopInventory
             {
                 if (user.Name == name && user.Password == password)
                 {
+                    PetsFunctionality petsFunctionality = new PetsFunctionality(context);
+                    UserFunctionality userFunctionality = new UserFunctionality();
+
                     Console.WriteLine("\n--------User login successfully--------- \n");
                     Console.WriteLine("""
-                        Inpute 1: to Change Password: 
+                        Inpute 1: Admin Can Change Password: 
                         Inpute 2: Go To Pet Shop Inventory: 
                          
                         """);
                     int condition = int.Parse(Console.ReadLine());
+
                     switch (condition)
                     {
                         case 1:
-                            Console.WriteLine("--Please give new credeincial for update user name and password---");
-                            Console.WriteLine("Enter New User Name: ");
-                            string newUserName = Console.ReadLine();
-                            Console.WriteLine("Enter New User Name: ");
-                            string newPassword = Console.ReadLine();
-                            user.Name = newUserName;
-                            user.Password = newPassword;
-                            context.SaveChanges();
+                            userFunctionality.ChangePassword();
                             break;
 
                         case 2:
                             Console.WriteLine($"---{user.Name} Hello, You Can Operate In This Below Options----");
                             Console.WriteLine("""
-                            Inpute 1: Add Pets In Store:  
-                            Inpute 2: Show All Pets Are Available:  
+                                Inpute 1: Add Pets In Store:  
+                                Inpute 2: Show All Pets Are Available:
+                                Input 3: Update To Pet:
+                                Input 4: Update To Pet Cage:
+                                Input 5: Delete Pet In A PetCage:
+                                Inpute 6: Delete PetCage:
                             """);
                             int condition2 = int.Parse(Console.ReadLine());
                             switch (condition2)
                             {
                                 case 1:
-                                    PetCage casePets = new PetCage
-                                    {
-                                        CageName = "Devon Rex Cage",
-                                        CageType = "Platinum",
-                                        PetsList = new List<Pet>
-                                        {
-                                            new Pet { Name = "Devon Rex Cat", Description = "This is pluggi cat", Color = "Balck", Type = "Turkish Van" }
-                               
-                                        }
-                                    };
-                                    context.PetCages.Add(casePets);
-                                    context.SaveChanges();
+                                    //Add Pet cage and pets...
+                                    petsFunctionality.AddCageAndPet();
                                     break;
 
                                 case 2:
-                                    Console.WriteLine("----------Thouse Cate Are Available In This Pet Shop Inventory---------");
-                                    List<PetCage> petCagesWithPets = context.PetCages.Include(c => c.PetsList).ToList();
-                                    foreach (PetCage cage in petCagesWithPets)
-                                    {
-                                        Console.WriteLine($"---------This Pets Are Cage The '{cage.CageName}' ---------");
-                                        Console.WriteLine($"Cage Id: {cage.ID} Cage Name: {cage.CageName} Cage Type: {cage.CageType}");
-                                        foreach (Pet pet in cage.PetsList)
-                                        {
-                                            Console.WriteLine($"Pet Id: {pet.Id} Nama: {pet.Name} Description: {pet.Description} Color: {pet.Color} Type: {pet.Type}");
-                                        }
-                                        Console.WriteLine();
-                                    }
+                                    //Show All My Cage Of Pets...
+                                    petsFunctionality.ShowCageOfPets();
+                                    break;
 
+                                case 3:
+                                    petsFunctionality.UpdatePets();
+                                    break;
+
+                                case 4:
+                                    petsFunctionality.UpdateCage();
+                                    break;
+
+                                case 5:
+                                    petsFunctionality.DeletePet();
+                                    break;
+
+                                case 6:
+                                    petsFunctionality.DeletePetCage();
                                     break;
                                     
                                 default:
-
+                                    Console.WriteLine("Don't Mach Any Case. Put in Right Case");
                                     break;
                             }
                             break;
 
                         default:
-                            Console.WriteLine("Don't match");
+                            Console.WriteLine("Don't Mach Any Case. Put in Right Case");
                             break;
                     }
                 }

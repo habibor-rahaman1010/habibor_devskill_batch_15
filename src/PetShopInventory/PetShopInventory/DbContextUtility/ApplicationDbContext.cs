@@ -47,5 +47,6 @@ namespace PetShopInventory
 
         public DbSet<User> Users { get; set; }
         public DbSet<PetCage> PetCages { get; set; }
+        public DbSet<Pet> Pets { get; set; }
     }
 }
