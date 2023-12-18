@@ -16,6 +16,7 @@ namespace PetShopInventory.PetsCURDoperation
         {
             _context = context;
         }
+        
         public void AddCageAndPet()
         {
             Console.WriteLine("---First Of All You Have To Create A PeT Case Then You Can Add A Pet In The PetCage---");
@@ -136,6 +137,70 @@ namespace PetShopInventory.PetsCURDoperation
             {
                 _context.Remove(petCage);
             }
+            _context.SaveChanges();
+        }
+
+        public void AddOnlyPets()
+        {
+            Console.WriteLine("------Here are available pets cage-------");
+            foreach (PetCage item in _context.PetCages)
+            {
+                Console.WriteLine($"id: {item.ID} Cage Name: {item.CageName}");
+            }
+        
+            if (_context.PetCages.Count() <= 0)
+            {
+                Console.WriteLine("--Your does not have exist any pet cage please first of all create a cage then add pet---");
+                Console.WriteLine($"Pet Cage Count: {_context.PetCages.Count()}");
+            }
+            else
+            {
+                Console.WriteLine("\nWhich Cage Do you add these pets? ");
+                Console.WriteLine("Enter Cage Id: ");
+                int petCageId = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("How many pets are add in this cage? ");
+                int numberOfPet = int.Parse(Console.ReadLine());
+
+                List<Pet> listOfPets = new List<Pet>();
+
+                for (int i = 0; i < numberOfPet; i++)
+                {
+                    Pet pet = new Pet();
+                    Console.WriteLine($"Insert Data For Number Of Item - {i + 1}");
+                    Console.WriteLine("Enter Pet Name: ");
+                    pet.Name = Console.ReadLine();
+                    Console.WriteLine("Enter pet description: ");
+                    pet.Description = Console.ReadLine();
+                    Console.WriteLine("Enter pet color: ");
+                    pet.Color = Console.ReadLine();
+                    Console.WriteLine("Enter pet type: ");
+                    pet.Type = Console.ReadLine();
+                    pet.CageId = petCageId;
+                    listOfPets.Add(pet);
+                }
+                PetCage? petsCage = _context.PetCages.Where(x => x.ID == petCageId).FirstOrDefault();
+                if (petsCage != null)
+                {
+                    petsCage.PetsList = petsCage.PetsList ?? new List<Pet>();
+                    petsCage.PetsList.AddRange(listOfPets);
+                }
+                _context.SaveChanges();
+            }
+        }
+
+        public void CreatePetCage()
+        {
+            Console.WriteLine("----Create Your Pet Cage----");
+            Console.WriteLine("Enter yor pet cage name: ");
+            string? cageName = Console.ReadLine();
+            Console.WriteLine("Enter yor pet cage type: ");
+            string? petCageType = Console.ReadLine();
+
+            PetCage petCage = new PetCage();
+            petCage.CageName = cageName;
+            petCage.CageType = petCageType;
+            _context.PetCages.Add(petCage);
             _context.SaveChanges();
         }
     }

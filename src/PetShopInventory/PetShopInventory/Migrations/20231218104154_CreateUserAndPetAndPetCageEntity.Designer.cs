@@ -11,8 +11,8 @@ using PetShopInventory;
 namespace PetShopInventory.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231217153442_CreatePetsEntity")]
-    partial class CreatePetsEntity
+    [Migration("20231218104154_CreateUserAndPetAndPetCageEntity")]
+    partial class CreateUserAndPetAndPetCageEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -75,6 +75,9 @@ namespace PetShopInventory.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PetPrice")
+                        .HasColumnType("int");
 
                     b.Property<string>("Type")
                         .IsRequired()

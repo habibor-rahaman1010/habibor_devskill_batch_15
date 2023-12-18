@@ -44,12 +44,14 @@ namespace PetShopInventory
                         case 2:
                             Console.WriteLine($"---{user.Name} Hello, You Can Operate In This Below Options----");
                             Console.WriteLine("""
-                                Inpute 1: Add Pets In Store:  
-                                Inpute 2: Show All Pets Are Available:
-                                Input 3: Update To Pet:
-                                Input 4: Update To Pet Cage:
-                                Input 5: Delete Pet In A PetCage:
-                                Inpute 6: Delete PetCage:
+                            Inpute 1: Add Cage And Pets In Store:  
+                            Inpute 2: Show All Pets Are Available:
+                            Input 3: Update To Pet:
+                            Input 4: Update To Pet Cage:
+                            Input 5: Delete Pet In A PetCage:
+                            Inpute 6: Delete PetCage:
+                            Input 7: Add Only Pet In A Cage: 
+                            Input 8: Add Pet Cage: 
                             """);
                             int condition2 = int.Parse(Console.ReadLine());
                             switch (condition2)
@@ -78,6 +80,14 @@ namespace PetShopInventory
 
                                 case 6:
                                     petsFunctionality.DeletePetCage();
+                                    break;
+
+                                case 7:
+                                    petsFunctionality.AddOnlyPets();
+                                    break;
+
+                                case 8:
+                                    petsFunctionality.CreatePetCage();
                                     break;
                                     
                                 default:

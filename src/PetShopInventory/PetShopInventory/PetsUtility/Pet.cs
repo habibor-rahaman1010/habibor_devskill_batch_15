@@ -12,6 +12,7 @@ namespace PetShopInventory.PetsUtility
         public string Name { get; set; }
         public string Description { get; set; }
         public string Color { get; set; }
+        public int PetPrice {  get; set; }
         public string Type { get; set; }
         public int CageId {  get; set; }
         public PetCage Cage { get; set; }
