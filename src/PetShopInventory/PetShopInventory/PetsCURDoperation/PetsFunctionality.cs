@@ -136,8 +136,16 @@ namespace PetShopInventory.PetsCURDoperation
         }
 
         public void DeletePet()
-        {   
-            Console.WriteLine("Enter The Pet Id Which Will Be Delete: ");
+        {
+            Console.WriteLine("\n------Here Are Your All Pets Which One Do You Delete Just Select The Id------\n");
+
+            List<Pet> pets = _context.Pets.ToList();
+            foreach (Pet item in pets)
+            {
+                Console.WriteLine($"ID: {item.Id} Name: {item.Name} Price: {item.PetPrice}");
+            }
+
+            Console.WriteLine("\nWhich one do you Delete? Enter pet Id from top of the list: \n");
             int id = int.Parse(Console.ReadLine());
 
             Pet? pet = _context.Pets.Where(x => x.Id == id).FirstOrDefault();
@@ -157,7 +165,7 @@ namespace PetShopInventory.PetsCURDoperation
                 Console.WriteLine($"CageID: {item.ID} CageName {item.CageName} CageType: {item.CageType}");
             }
 
-            Console.WriteLine("\nEnter The PetCage Id Which Will Be Delete: ");
+            Console.WriteLine("\nEnter The PetCage Top Of The List: ");
             int id = int.Parse(Console.ReadLine());
 
             PetCage? petCage = _context.PetCages.Where(x => x.ID == id).FirstOrDefault();
@@ -232,6 +240,40 @@ namespace PetShopInventory.PetsCURDoperation
             petCage.CageType = petCageType;
 
             _context.PetCages.Add(petCage);
+            _context.SaveChanges();
+        }
+
+        public void DeletePetInCage()
+        {
+            Console.WriteLine("\n--------This is your all existing pet cage you can select any cage for delete a Pet-------\n");
+            List<PetCage> petCage = _context.PetCages.ToList();
+            foreach (PetCage item in petCage)
+            {
+                Console.WriteLine($"CageID: {item.ID} CageName {item.CageName} CageType: {item.CageType}");
+            }
+            Console.WriteLine("\n Select Cage Id For delete particular pet in this Cage! Enter Cage Id from top of the list: \n");
+            int cageId = int.Parse(Console.ReadLine());
+
+            PetCage? seleactCage = _context.PetCages.Where(x => x.ID == cageId).FirstOrDefault();
+
+            Console.WriteLine($"\n------Here These Pets Are Available In This PetsCage: \"{seleactCage.CageName}\" Which One Do You Delete Just Select The Id------\n");
+            
+            List<Pet> pets = _context.Pets.Where(p => p.CageId == seleactCage.ID).ToList();
+            foreach (Pet item in pets)
+            {
+                Console.WriteLine($"Id:{item.Id} Name:{item.Name} Price: {item.PetPrice}");
+            }
+
+            Console.WriteLine("Select Pet Id For Delete Top Of The List: ");
+            int petId = int.Parse(Console.ReadLine());
+
+            //var n = _context.Pets.Where(p => p.CageId == seleactCage.ID).Where(x => x.Id == petId).FirstOrDefault();
+            //Pet? pet = _context.Pets.Where(x => x.Id == petId).FirstOrDefault();
+            Pet? pet = _context.Pets.Where(p => p.CageId == seleactCage.ID).Where(x => x.Id == petId).FirstOrDefault();
+            if (pet != null)
+            {
+                _context.Pets.Remove(pet);
+            }
             _context.SaveChanges();
         }
     }

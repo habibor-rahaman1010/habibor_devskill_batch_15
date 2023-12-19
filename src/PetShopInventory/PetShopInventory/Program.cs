@@ -57,7 +57,8 @@ namespace PetShopInventory
                             Input 5: Delete A Pet:
                             Inpute 6: Delete A PetCage:
                             Input 7: Add Only Pet In A Cage: 
-                            Input 8: Add A Pet Cage: 
+                            Input 8: Add A Pet Cage:
+                            Input 9: Delete Pet In A PetCage:
                             """);
                             int condition2 = int.Parse(Console.ReadLine());
                             switch (condition2)
@@ -94,6 +95,10 @@ namespace PetShopInventory
 
                                 case 8:
                                     petsFunctionality.CreatePetCage();
+                                    break;
+
+                                case 9:
+                                    petsFunctionality.DeletePetInCage();
                                     break;
                                     
                                 default:
@@ -134,7 +139,6 @@ namespace PetShopInventory
                                     break;
                             }
                             break;
-
 
                         default:
                             Console.WriteLine("Don't Mach Any Case. Put in Right Case");
