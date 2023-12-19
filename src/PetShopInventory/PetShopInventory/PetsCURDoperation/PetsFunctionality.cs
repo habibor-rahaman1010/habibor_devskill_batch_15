@@ -112,7 +112,14 @@ namespace PetShopInventory.PetsCURDoperation
 
         public void UpdateCage()
         {
-            Console.WriteLine("Enter PetCage Id For To Update Cage: ");
+            Console.WriteLine("\n--------This is your all existing pet cage you can update any Pet Cage");
+            List<PetCage> petCage = _context.PetCages.ToList();
+            foreach(PetCage item in petCage)
+            {
+                Console.WriteLine($"CageID: {item.ID} CageName {item.CageName} CageType: {item.CageType}");
+            }
+
+            Console.WriteLine("\nWhich one do you update? Enter Cage Id from top of the lsit: \n");
             int cageId = int.Parse(Console.ReadLine());
             Console.WriteLine("Enter New PetCage Name: ");
             string newCageName = Console.ReadLine();
@@ -143,7 +150,14 @@ namespace PetShopInventory.PetsCURDoperation
 
         public void DeletePetCage()
         {
-            Console.WriteLine("Enter The PetCage Id Which Will Be Delete: ");
+            Console.WriteLine("\n--------This is your all existing pet cage you can delete any Pet Cage------\n");
+            List<PetCage> petCages = _context.PetCages.ToList();
+            foreach (PetCage item in petCages)
+            {
+                Console.WriteLine($"CageID: {item.ID} CageName {item.CageName} CageType: {item.CageType}");
+            }
+
+            Console.WriteLine("\nEnter The PetCage Id Which Will Be Delete: ");
             int id = int.Parse(Console.ReadLine());
 
             PetCage? petCage = _context.PetCages.Where(x => x.ID == id).FirstOrDefault();
