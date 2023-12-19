@@ -52,12 +52,12 @@ namespace PetShopInventory
                             Console.WriteLine("""
                             Inpute 1: Add Cage And Pets In Store:  
                             Inpute 2: Show All Pets Are Available:
-                            Input 3: Update To Pet:
-                            Input 4: Update To Pet Cage:
-                            Input 5: Delete Pet In A PetCage:
-                            Inpute 6: Delete PetCage:
+                            Input 3: Update To A Pet:
+                            Input 4: Update To A Pet Cage:
+                            Input 5: Delete A Pet:
+                            Inpute 6: Delete A PetCage:
                             Input 7: Add Only Pet In A Cage: 
-                            Input 8: Add Pet Cage: 
+                            Input 8: Add A Pet Cage: 
                             """);
                             int condition2 = int.Parse(Console.ReadLine());
                             switch (condition2)
