@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PetShopInventory.Account;
+using PetShopInventory.DbContextUtility;
+using PetShopInventory.FeedingScheduleUtitlity;
 using PetShopInventory.PetsUtility;
 using System;
 using System.Collections.Generic;
@@ -13,9 +15,12 @@ namespace PetShopInventory
     {
         private readonly string _connectionString;
 
-        public ApplicationDbContext()
+        public ApplicationDbContext(string connectionString)
         {
-            _connectionString = "Server=HABIBOR-RAHAMAN\\SQLEXPRESS;Database=PetShopInventoryDB;User Id=habibor144369;Password=c++c++c#;Trust Server Certificate=True;";
+            _connectionString = connectionString;
+        }
+        public ApplicationDbContext() {
+            _connectionString = ConnectionInfo.ConnectionString;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -35,8 +40,14 @@ namespace PetShopInventory
                 .WithMany(c => c.PetsList)
                 .HasForeignKey(p => p.CageId)
                 .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Pet>().ToTable("Pets");
 
+            modelBuilder.Entity<FeedingSchedule>()
+            .HasOne(fs => fs.Cage)
+            .WithMany(pc => pc.PetCageFeedingSchedules)
+            .HasForeignKey(fs => fs.CageId)
+            .OnDelete(DeleteBehavior.Cascade);
             base.OnModelCreating(modelBuilder);
         }
 
@@ -48,5 +59,6 @@ namespace PetShopInventory
         public DbSet<User> Users { get; set; }
         public DbSet<PetCage> PetCages { get; set; }
         public DbSet<Pet> Pets { get; set; }
+        public DbSet<FeedingSchedule> FeedingSchedules { get; set; }
     }
 }

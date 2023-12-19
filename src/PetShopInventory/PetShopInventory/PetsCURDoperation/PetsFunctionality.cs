@@ -194,7 +194,7 @@ namespace PetShopInventory.PetsCURDoperation
             Console.WriteLine("----Create Your Pet Cage----");
             Console.WriteLine("Enter yor pet cage name: ");
             string? cageName = Console.ReadLine();
-            Console.WriteLine("Enter yor pet cage type: ");
+            Console.WriteLine("Enter your pet cage type: ");
             string? petCageType = Console.ReadLine();
 
             PetCage petCage = new PetCage();

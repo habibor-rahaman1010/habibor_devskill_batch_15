@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PetShopInventory;
 
@@ -11,9 +12,11 @@ using PetShopInventory;
 namespace PetShopInventory.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231218175455_CreateFeedingScheduleEntity")]
+    partial class CreateFeedingScheduleEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,7 +43,7 @@ namespace PetShopInventory.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
 
                     b.HasData(
                         new
@@ -73,7 +76,7 @@ namespace PetShopInventory.Migrations
 
                     b.HasIndex("CageId");
 
-                    b.ToTable("FeedingSchedules", (string)null);
+                    b.ToTable("FeedingSchedules");
                 });
 
             modelBuilder.Entity("PetShopInventory.PetsUtility.Pet", b =>
@@ -131,7 +134,7 @@ namespace PetShopInventory.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("PetCages", (string)null);
+                    b.ToTable("PetCages");
                 });
 
             modelBuilder.Entity("PetShopInventory.FeedingScheduleUtitlity.FeedingSchedule", b =>

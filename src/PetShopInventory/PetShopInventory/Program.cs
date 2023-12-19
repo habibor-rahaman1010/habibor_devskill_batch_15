@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PetShopInventory.Account;
+using PetShopInventory.DbContextUtility;
+using PetShopInventory.FeedingScheduleUtitlity;
 using PetShopInventory.PetsCURDoperation;
 using PetShopInventory.PetsUtility;
 using System;
@@ -11,7 +13,10 @@ namespace PetShopInventory
     {
         public static void Main(string[] args)
         {
-            using ApplicationDbContext context = new ApplicationDbContext();
+            string connection = ConnectionInfo.ConnectionString;
+
+            using ApplicationDbContext context = new ApplicationDbContext(connection);
+            
             User? user =  context.Users.FirstOrDefault();
 
             Console.WriteLine("Plese enter your user name: ");
@@ -25,13 +30,14 @@ namespace PetShopInventory
                 if (user.Name == name && user.Password == password)
                 {
                     PetsFunctionality petsFunctionality = new PetsFunctionality(context);
-                    UserFunctionality userFunctionality = new UserFunctionality();
+                    UserFunctionality userFunctionality = new UserFunctionality(context);
+                    FeedingSchedulFuntionality feedingSchedulFuntionality = new FeedingSchedulFuntionality(context);
 
                     Console.WriteLine("\n--------User login successfully--------- \n");
                     Console.WriteLine("""
                         Inpute 1: Admin Can Change Password: 
                         Inpute 2: Go To Pet Shop Inventory: 
-                         
+                        Input 3: Here Feeding Schedule For Pet: 
                         """);
                     int condition = int.Parse(Console.ReadLine());
 
@@ -95,6 +101,40 @@ namespace PetShopInventory
                                     break;
                             }
                             break;
+
+                        case 3:
+                            Console.WriteLine("-----This is my pet feeding schedul based on the pet cage-----");
+                            Console.WriteLine("""
+                                Input 1: Add Feeding Schedule For A Peta Of Cage:
+                                Input 2: Show All Feeding Schedules For Pets Of Cage:
+                                Input 3: Update Schedule For Pets Of Aage Schedule: 
+                                Input 4: Delete Schedule: 
+                                """);
+                            int condition3 = int.Parse(Console.ReadLine());
+                            switch (condition3)
+                            {
+                                case 1:
+                                    feedingSchedulFuntionality.AddFeedSchedul();
+                                    break;
+
+                                case 2:
+                                    feedingSchedulFuntionality.ShowFeeingScheduls();
+                                    break;
+
+                                case 3:
+                                    feedingSchedulFuntionality.UpdateFeeingScheduls();
+                                    break;
+
+                                case 4:
+                                    feedingSchedulFuntionality.DeleteSchedul();
+                                    break;
+
+                                default:
+                                    Console.WriteLine("Don't Mach Any Case. Put in Right Case");
+                                    break;
+                            }
+                            break;
+
 
                         default:
                             Console.WriteLine("Don't Mach Any Case. Put in Right Case");
