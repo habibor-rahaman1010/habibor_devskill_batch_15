@@ -82,7 +82,7 @@ namespace PetShopInventory.FeedingScheduleUtitlity
             {
                 Console.WriteLine($"{schedule.FeedingTime} Schedul Id: {schedule.Id}");
             }
-            Console.WriteLine("\nWhich one do you update? Enter schedul Id from top the lsit: \n");
+            Console.WriteLine("\nWhich one do you update? Enter schedul Id from top of the list: \n");
             int id = int.Parse(Console.ReadLine());
             Console.WriteLine("Enter Spechial Instruction for feeding: ");
             string? instrution = Console.ReadLine();

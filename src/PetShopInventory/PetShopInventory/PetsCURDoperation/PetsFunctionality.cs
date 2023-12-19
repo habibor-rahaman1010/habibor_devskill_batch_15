@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace PetShopInventory.PetsCURDoperation
@@ -40,6 +41,8 @@ namespace PetShopInventory.PetsCURDoperation
                 pet.Description = Console.ReadLine();
                 Console.WriteLine("Enter pet color: ");
                 pet.Color = Console.ReadLine();
+                Console.WriteLine("Enter pet price: ");
+                pet.PetPrice = int.Parse(Console.ReadLine());
                 Console.WriteLine("Enter pet type: ");
                 pet.Type = Console.ReadLine();
                 listOfPets.Add(pet);
@@ -58,7 +61,7 @@ namespace PetShopInventory.PetsCURDoperation
 
         public void ShowCageOfPets()
         {
-            Console.WriteLine("----------Thouse Cate Are Available In This Pet Shop Inventory---------");
+            Console.WriteLine("\n----------Thouse Pets Are Available In This Pet Shop Inventory---------\n");
             List<PetCage> petCagesWithPets =_context.PetCages.Include(c => c.PetsList).ToList();
             foreach (PetCage cage in petCagesWithPets)
             {
@@ -66,7 +69,7 @@ namespace PetShopInventory.PetsCURDoperation
                 Console.WriteLine($"Cage Id: {cage.ID} Cage Name: {cage.CageName} Cage Type: {cage.CageType}");
                 foreach (Pet pet in cage.PetsList)
                 {
-                    Console.WriteLine($"Pet Id: {pet.Id} Nama: {pet.Name} Description: {pet.Description} Color: {pet.Color} Type: {pet.Type}");
+                    Console.WriteLine($"Pet Id: {pet.Id} Nama: {pet.Name} Description: {pet.Description} Color: {pet.Color} Price: {pet.PetPrice} Type: {pet.Type}");
                 }
                 Console.WriteLine();
             }
@@ -74,7 +77,15 @@ namespace PetShopInventory.PetsCURDoperation
 
         public void UpdatePets()
         {
-            Console.WriteLine("Enter Pet Id For To Update Pet: ");
+            Console.WriteLine("\n------Here Are Your All Pets Which One Do You Update Just Select The Id------\n");
+
+            List<Pet> pets = _context.Pets.ToList();
+            foreach (Pet item in pets)
+            {
+                Console.WriteLine($"ID: {item.Id} Name: {item.Name} Price: {item.PetPrice}");
+            }
+
+            Console.WriteLine("\nWhich one do you update? Enter pet Id from top of the list: \n");
             int petId = int.Parse(Console.ReadLine()); 
             Console.WriteLine("Enter pet new name: ");
             string newName = Console.ReadLine();
@@ -82,6 +93,8 @@ namespace PetShopInventory.PetsCURDoperation
             string newDescription = Console.ReadLine();
             Console.WriteLine("Enter pet color: ");
             string petColor = Console.ReadLine();
+            Console.WriteLine("Enter pet price: ");
+            int petPrice = int.Parse(Console.ReadLine());
             Console.WriteLine("Enter pet type");
             string petType = Console.ReadLine();
 
@@ -91,6 +104,7 @@ namespace PetShopInventory.PetsCURDoperation
                 pet.Name = newName;
                 pet.Description = newDescription;
                 pet.Color = petColor;
+                pet.PetPrice = petPrice;
                 pet.Type = petType;
             }
            _context.SaveChanges();
@@ -174,6 +188,8 @@ namespace PetShopInventory.PetsCURDoperation
                     pet.Description = Console.ReadLine();
                     Console.WriteLine("Enter pet color: ");
                     pet.Color = Console.ReadLine();
+                    Console.WriteLine("Enter pet price: ");
+                    pet.PetPrice = int.Parse(Console.ReadLine());
                     Console.WriteLine("Enter pet type: ");
                     pet.Type = Console.ReadLine();
                     pet.CageId = petCageId;
@@ -200,6 +216,7 @@ namespace PetShopInventory.PetsCURDoperation
             PetCage petCage = new PetCage();
             petCage.CageName = cageName;
             petCage.CageType = petCageType;
+
             _context.PetCages.Add(petCage);
             _context.SaveChanges();
         }
