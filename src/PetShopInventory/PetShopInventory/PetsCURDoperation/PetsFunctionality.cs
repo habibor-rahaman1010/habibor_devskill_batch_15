@@ -251,7 +251,7 @@ namespace PetShopInventory.PetsCURDoperation
             {
                 Console.WriteLine($"CageID: {item.ID} CageName {item.CageName} CageType: {item.CageType}");
             }
-            Console.WriteLine("\n Select Cage Id For delete particular pet in this Cage! Enter Cage Id from top of the list: \n");
+            Console.WriteLine("\nSelect Cage Id For delete particular pet in this Cage! Enter Cage Id from top of the list: \n");
             int cageId = int.Parse(Console.ReadLine());
 
             PetCage? seleactCage = _context.PetCages.Where(x => x.ID == cageId).FirstOrDefault();
@@ -259,22 +259,30 @@ namespace PetShopInventory.PetsCURDoperation
             Console.WriteLine($"\n------Here These Pets Are Available In This PetsCage: \"{seleactCage.CageName}\" Which One Do You Delete Just Select The Id------\n");
             
             List<Pet> pets = _context.Pets.Where(p => p.CageId == seleactCage.ID).ToList();
-            foreach (Pet item in pets)
-            {
-                Console.WriteLine($"Id:{item.Id} Name:{item.Name} Price: {item.PetPrice}");
-            }
 
-            Console.WriteLine("Select Pet Id For Delete Top Of The List: ");
-            int petId = int.Parse(Console.ReadLine());
-
-            //var n = _context.Pets.Where(p => p.CageId == seleactCage.ID).Where(x => x.Id == petId).FirstOrDefault();
-            //Pet? pet = _context.Pets.Where(x => x.Id == petId).FirstOrDefault();
-            Pet? pet = _context.Pets.Where(p => p.CageId == seleactCage.ID).Where(x => x.Id == petId).FirstOrDefault();
-            if (pet != null)
+            Console.WriteLine($"Number of pets in cage: {pets.Count()}");
+            if (pets.Count() > 0)
             {
-                _context.Pets.Remove(pet);
+                foreach (Pet item in pets)
+                {
+                    Console.WriteLine($"Id: {item.Id} Name: {item.Name} Price: {item.PetPrice}");
+                }
+                Console.WriteLine("\nSelect Pet Id For Delete Top Of The List: ");
+                int petId = int.Parse(Console.ReadLine());
+
+                //Pet pet = _context.Pets.Where(p => p.CageId == seleactCage.ID).Where(x => x.Id == petId).FirstOrDefault();
+                //Pet? pet = _context.Pets.Where(x => x.Id == petId).FirstOrDefault();
+                Pet? pet = _context.Pets.Where(p => p.CageId == seleactCage.ID).Where(x => x.Id == petId).FirstOrDefault();
+                if (pet != null)
+                {
+                    _context.Pets.Remove(pet);
+                }
+                _context.SaveChanges();
             }
-            _context.SaveChanges();
+            else
+            {
+                Console.WriteLine($"The {seleactCage.CageName} is Empty");
+            }
         }
     }
 }
