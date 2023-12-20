@@ -59,7 +59,10 @@ namespace PetShopInventory.FeedingScheduleUtitlity
 
             foreach(FeedingSchedule schedule in schedules)
             {
-                Console.WriteLine($"{schedule.FeedingTime} Pet Cage Id: {schedule.CageId}");
+                DayOfWeek dayOfWeek = schedule.FeedingTime.DayOfWeek;
+                string timeOfDayString = (schedule.FeedingTime.Hour < 12) ? "Morning" : "Evening";
+                Console.WriteLine($"{schedule.FeedingTime} || Day Of Week: {dayOfWeek} - {timeOfDayString} || CageId: {schedule.CageId}");
+      
                 PetCage? petCage = _context.PetCages.Include(pc => pc.PetsList).Where(x=> x.ID == schedule.CageId).FirstOrDefault();
 
                 if (petCage != null && petCage.PetsList != null)
@@ -80,7 +83,9 @@ namespace PetShopInventory.FeedingScheduleUtitlity
             List<FeedingSchedule> schedules = _context.FeedingSchedules.ToList();
             foreach (FeedingSchedule schedule in schedules)
             {
-                Console.WriteLine($"{schedule.FeedingTime} Schedul Id: {schedule.Id}");
+                DayOfWeek dayOfWeek = schedule.FeedingTime.DayOfWeek;
+                string timeOfDayString = (schedule.FeedingTime.Hour < 12) ? "Morning" : "Evening";
+                Console.WriteLine($"{schedule.FeedingTime} || Day Of Week: {dayOfWeek} - {timeOfDayString} || Schedul Id: {schedule.Id}");
             }
             Console.WriteLine("\nWhich one do you update? Enter schedul Id from top of the list: \n");
             int id = int.Parse(Console.ReadLine());
