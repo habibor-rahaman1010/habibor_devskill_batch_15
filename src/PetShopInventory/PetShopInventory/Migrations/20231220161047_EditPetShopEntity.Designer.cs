@@ -12,8 +12,8 @@ using PetShopInventory;
 namespace PetShopInventory.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231218175455_CreateFeedingScheduleEntity")]
-    partial class CreateFeedingScheduleEntity
+    [Migration("20231220161047_EditPetShopEntity")]
+    partial class EditPetShopEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -79,6 +79,34 @@ namespace PetShopInventory.Migrations
                     b.ToTable("FeedingSchedules");
                 });
 
+            modelBuilder.Entity("PetShopInventory.PetsPurchaseUtility.PetPurchase", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Contact")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PurchaseDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PetPurchases");
+                });
+
             modelBuilder.Entity("PetShopInventory.PetsUtility.Pet", b =>
                 {
                     b.Property<int>("Id")
@@ -105,6 +133,9 @@ namespace PetShopInventory.Migrations
                     b.Property<int>("PetPrice")
                         .HasColumnType("int");
 
+                    b.Property<int?>("PetPurchaseId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -112,6 +143,8 @@ namespace PetShopInventory.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CageId");
+
+                    b.HasIndex("PetPurchaseId");
 
                     b.ToTable("Pets", (string)null);
                 });
@@ -156,7 +189,16 @@ namespace PetShopInventory.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PetShopInventory.PetsPurchaseUtility.PetPurchase", null)
+                        .WithMany("PurchasedPetsList")
+                        .HasForeignKey("PetPurchaseId");
+
                     b.Navigation("Cage");
+                });
+
+            modelBuilder.Entity("PetShopInventory.PetsPurchaseUtility.PetPurchase", b =>
+                {
+                    b.Navigation("PurchasedPetsList");
                 });
 
             modelBuilder.Entity("PetShopInventory.PetsUtility.PetCage", b =>

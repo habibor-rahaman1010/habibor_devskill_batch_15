@@ -13,9 +13,9 @@ namespace PetShopInventory.PetsCURDoperation
     public class PetsFunctionality
     {
         private readonly ApplicationDbContext _context;
-        public PetsFunctionality(ApplicationDbContext context)
+        public PetsFunctionality(ApplicationDbContext _context)
         {
-            _context = context;
+            this._context = _context;
         }
         
         public void AddCageAndPet()

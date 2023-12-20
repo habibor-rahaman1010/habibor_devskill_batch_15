@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PetShopInventory;
 
@@ -11,9 +12,11 @@ using PetShopInventory;
 namespace PetShopInventory.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231220160631_CreatePetShopEntity")]
+    partial class CreatePetShopEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,7 +133,7 @@ namespace PetShopInventory.Migrations
                     b.Property<int>("PetPrice")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PetPurchaseId")
+                    b.Property<int>("PetPurchaseId")
                         .HasColumnType("int");
 
                     b.Property<string>("Type")
@@ -186,16 +189,20 @@ namespace PetShopInventory.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PetShopInventory.PetsPurchaseUtility.PetPurchase", null)
-                        .WithMany("PurchasedPets")
-                        .HasForeignKey("PetPurchaseId");
+                    b.HasOne("PetShopInventory.PetsPurchaseUtility.PetPurchase", "PetPurchase")
+                        .WithMany("PurchasedPetsList")
+                        .HasForeignKey("PetPurchaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Cage");
+
+                    b.Navigation("PetPurchase");
                 });
 
             modelBuilder.Entity("PetShopInventory.PetsPurchaseUtility.PetPurchase", b =>
                 {
-                    b.Navigation("PurchasedPets");
+                    b.Navigation("PurchasedPetsList");
                 });
 
             modelBuilder.Entity("PetShopInventory.PetsUtility.PetCage", b =>

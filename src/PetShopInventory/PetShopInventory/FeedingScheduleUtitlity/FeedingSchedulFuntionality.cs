@@ -12,9 +12,9 @@ namespace PetShopInventory.FeedingScheduleUtitlity
     {
         private readonly ApplicationDbContext _context;
 
-        public FeedingSchedulFuntionality(ApplicationDbContext context)
+        public FeedingSchedulFuntionality(ApplicationDbContext _context)
         {
-            _context = context;
+            this._context = _context;
         }
 
         public void AddFeedSchedul()

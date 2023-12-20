@@ -3,6 +3,7 @@ using PetShopInventory.Account;
 using PetShopInventory.DbContextUtility;
 using PetShopInventory.FeedingScheduleUtitlity;
 using PetShopInventory.PetsCURDoperation;
+using PetShopInventory.PetsPurchaseUtility;
 using PetShopInventory.PetsUtility;
 using System;
 using System.Threading.Channels;
@@ -32,12 +33,14 @@ namespace PetShopInventory
                     PetsFunctionality petsFunctionality = new PetsFunctionality(context);
                     UserFunctionality userFunctionality = new UserFunctionality(context);
                     FeedingSchedulFuntionality feedingSchedulFuntionality = new FeedingSchedulFuntionality(context);
+                    PetPurchaseFuntionality petPurchaseFuntionality = new PetPurchaseFuntionality(context);
 
                     Console.WriteLine("\n--------User login successfully--------- \n");
                     Console.WriteLine("""
                         Inpute 1: Admin Can Change Password: 
                         Inpute 2: Go To Pet Shop Inventory: 
                         Input 3: Here Feeding Schedule For Pet: 
+                        Input 4: Pet Purchases Information Add Shop Owner: 
                         """);
                     int condition = int.Parse(Console.ReadLine());
 
@@ -132,6 +135,34 @@ namespace PetShopInventory
 
                                 case 4:
                                     feedingSchedulFuntionality.DeleteSchedul();
+                                    break;
+
+                                default:
+                                    Console.WriteLine("Don't Mach Any Case. Put in Right Case");
+                                    break;
+                            }
+                            break;
+
+                        case 4:
+                            Console.WriteLine("-----Here Shop Owner See Availabe Pet Purchases Funtionality-----");
+                            Console.WriteLine("""
+                                Input 1: Add Pet Purchase Inforamtion: 
+                                Input 2: Show All Pet Purchase Informations: 
+                                Input 3: Add Multiplr Pet Purchase Information: 
+                                """);
+                            int condition4 = int.Parse(Console.ReadLine());
+                            switch (condition4)
+                            {
+                                case 1:
+                                    petPurchaseFuntionality.AddPetParchaseInfo();
+                                    break;
+
+                                case 2:
+                                    petPurchaseFuntionality.ShowAllPurchases();
+                                    break;
+
+                                case 3:
+                                    petPurchaseFuntionality.AddPetPurchaseInfo();
                                     break;
 
                                 default:
