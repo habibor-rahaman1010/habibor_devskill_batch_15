@@ -1,38 +1,24 @@
-﻿using System;
-using System.IO;
+﻿    
+    string solutionPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+    string filePath = @"..\\..\\..\\..\\large.txt";
+    string originalFilePath = Path.Combine(solutionPath, filePath);
 
-class Program
-{
-    static void Main()
+    if (!File.Exists(originalFilePath))
     {
-        // Adjust the path accordingly
-        string projectFolderPath = Directory.GetCurrentDirectory();
-        string dataFolderPath = Path.Combine(projectFolderPath, "Data");
-        string originalFilePath = Path.Combine(dataFolderPath, "RandomTextFile.txt");
+        Console.WriteLine("The original file does not exist. Please generate it first.");
+        return;
+    }
 
-        // Check if the original file exists
-        if (!File.Exists(originalFilePath))
-        {
-            Console.WriteLine("The original file does not exist. Please generate it first.");
-            return;
-        }
+    int chunkSizeInBytes = 100 * 1024 * 1024;
+    int folderCounter = 1;
+    int fileCounter = 1;
 
-        // Create a directory to store split files and folders
-        string splitFilesPath = Path.Combine(projectFolderPath, "SplitFiles");
-        if (!Directory.Exists(splitFilesPath))
-        {
-            Directory.CreateDirectory(splitFilesPath);
-        }
-
+    try
+    {
         using (FileStream originalFileStream = new FileStream(originalFilePath, FileMode.Open, FileAccess.Read))
         {
-            int folderCounter = 1;
-            int fileCounter = 1;
-            long chunkSizeInBytes = 100 * 1024 * 1024; // 100 MB
-
             while (originalFileStream.Position < originalFileStream.Length)
             {
-                // Create a new folder if the maximum number of files is reached
                 if (fileCounter > 10)
                 {
                     folderCounter++;
@@ -40,7 +26,7 @@ class Program
                 }
 
                 string folderName = $"Folder{folderCounter}";
-                string folderPath = Path.Combine(splitFilesPath, folderName);
+                string folderPath = Path.Combine(solutionPath, folderName);
 
                 if (!Directory.Exists(folderPath))
                 {
@@ -51,7 +37,7 @@ class Program
 
                 using (FileStream splitFileStream = new FileStream(newFilePath, FileMode.Create))
                 {
-                    byte[] buffer = new byte[1024]; // 1 KB buffer
+                    byte[] buffer = new byte[1024];
 
                     long bytesRead = 0;
                     int read;
@@ -69,4 +55,8 @@ class Program
 
         Console.WriteLine("File splitting completed.");
     }
-}
+    catch (Exception ex)
+    {
+        Console.WriteLine($"An error occurred: {ex.Message}");
+    }
+  
