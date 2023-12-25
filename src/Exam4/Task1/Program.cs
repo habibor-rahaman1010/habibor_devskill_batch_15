@@ -1,53 +1,41 @@
-﻿DirectoryInfo currentDirectory = new DirectoryInfo(Directory.GetCurrentDirectory());
-string newPath = Path.Combine(currentDirectory.Parent.Parent.Parent.Parent.FullName, "Data");
+﻿
+    string solutionPath = Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\..\\");
+    string filePath = Path.Combine(solutionPath, "large.txt");
 
-if (!Directory.Exists(newPath))
-{
-    Directory.CreateDirectory(newPath);
-}
+    long targetSizeInBytes = 5L * 1024 * 1024 * 1024;
+    long currentSizeInBytes = 0;
 
-FileInfo file = new FileInfo(Path.Combine(newPath, "RandomTextFile.txt"));
+    if (File.Exists(filePath))
+    {
+        Console.WriteLine("File already exists!");
+        return;
+    }
 
-if (!file.Exists)
-{
     Console.WriteLine("Creating a 5 GB file...");
 
     try
     {
-        using (FileStream fs = new FileStream(file.FullName, FileMode.CreateNew))
+        using (Stream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
         {
-            long fileSizeInBytes = 0;
-            long targetSizeInBytes = 5L * 1024 * 1024 * 1024;
-            byte[] buffer = new byte[1024 * 1024];
+            Random random = new Random();
 
-            while (fileSizeInBytes < targetSizeInBytes)
+            while (currentSizeInBytes < targetSizeInBytes)
             {
-                int bytesToWrite = (int)Math.Min(targetSizeInBytes - fileSizeInBytes, buffer.Length);
-
-                for (int i = 0; i < bytesToWrite; i++)
-                {
-                    buffer[i] = (byte)GetRandomChar();
-                }
-
-                fs.Write(buffer, 0, bytesToWrite);
-                fileSizeInBytes += bytesToWrite;
+                char randomChar = GetRandomChar(random);
+                byte[] charBytes = BitConverter.GetBytes(randomChar);
+                fs.Write(charBytes, 0, charBytes.Length);
+                currentSizeInBytes += charBytes.Length;
             }
         }
 
-        Console.WriteLine("File creation completed.");
+        Console.WriteLine($"File creation completed. File size: {currentSizeInBytes / (1024.0 * 1024.0 * 1024.0):F2} GB");
     }
     catch (Exception ex)
     {
         Console.WriteLine($"An error occurred: {ex.Message}");
     }
-}
-else
-{
-    Console.WriteLine("File already exists");
-}
 
-static int GetRandomChar()
-{
-    Random random = new Random(DateTime.Now.Millisecond);
-    return random.Next('A', 'Z');
-}
+    static char GetRandomChar(Random random)
+    {
+        return (char)random.Next('A', 'Z');
+    }
