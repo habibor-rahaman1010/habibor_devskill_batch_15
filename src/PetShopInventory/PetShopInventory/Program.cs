@@ -6,6 +6,7 @@ using PetShopInventory.PetsCURDoperation;
 using PetShopInventory.PetsPurchaseUtility;
 using PetShopInventory.PetsUtility;
 using PetShopInventory.SalesRecords;
+using PetShopInventory.ShopReports;
 using System;
 using System.Threading.Channels;
 
@@ -42,6 +43,7 @@ namespace PetShopInventory
                         FeedingSchedulFuntionality feedingSchedulFuntionality = new FeedingSchedulFuntionality(context);
                         PetPurchaseFuntionality petPurchaseFuntionality = new PetPurchaseFuntionality(context);
                         SalesRecordsFuntionality salesRecordsFuntionality = new SalesRecordsFuntionality(context);
+                        RepotsFuntionality repotsFuntionality = new RepotsFuntionality(context);
 
                         Console.WriteLine("\n--------User login successfully--------- \n");
 
@@ -56,6 +58,7 @@ namespace PetShopInventory
                         Input 4: Pet Purchases Information Add Shop Owner: 
                         Input 5: Pets Sales Record Add Shop Owner: 
                         Input 6: Logout In Pet Shop Inventory:
+                        Input 7: Show Monthly Purchas Ans Sells Reports: 
                         """);
                             int condition = int.Parse(Console.ReadLine());
 
@@ -214,6 +217,20 @@ namespace PetShopInventory
                                     break;
 
                                 case 7:
+                                    Console.WriteLine("""
+                                     Input 1: Show Monthy Purchas Report: 
+                                     """);
+                                    int condition6 = int.Parse(Console.ReadLine());
+                                    switch (condition6)
+                                    {
+                                        case 1:
+                                            repotsFuntionality.ShowMonthlyPurchase();
+                                            break;
+
+                                        default:
+                                            Console.WriteLine("Don't Mach Any Case. Put in Right Case");
+                                            break;
+                                    }
                                     break;
 
                                 default:
