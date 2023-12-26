@@ -15,35 +15,39 @@ namespace PetShopInventory
     {
         public static void Main(string[] args)
         {
-            string connection = ConnectionInfo.ConnectionString;
+            bool terminate = true;
 
-            using ApplicationDbContext context = new ApplicationDbContext(connection);
-            
-            User? user =  context.Users.FirstOrDefault();
-
-            Console.WriteLine("Plese enter your user name: ");
-            string? name = Console.ReadLine();
-
-            Console.WriteLine("Plese enter your password");
-            string? password = Console.ReadLine();
-
-            bool run = true;
-
-            if (user != null)
+            while (terminate)
             {
-                if (user.Name == name && user.Password == password)
+                string connection = ConnectionInfo.ConnectionString;
+
+                using ApplicationDbContext context = new ApplicationDbContext(connection);
+
+                User? user = context.Users.FirstOrDefault();
+
+                Console.WriteLine("Plese enter your user name: ");
+                string? name = Console.ReadLine();
+
+                Console.WriteLine("Plese enter your password");
+                string? password = Console.ReadLine();
+
+                bool run = true;
+
+                if (user != null)
                 {
-                    PetsFunctionality petsFunctionality = new PetsFunctionality(context);
-                    UserFunctionality userFunctionality = new UserFunctionality(context);
-                    FeedingSchedulFuntionality feedingSchedulFuntionality = new FeedingSchedulFuntionality(context);
-                    PetPurchaseFuntionality petPurchaseFuntionality = new PetPurchaseFuntionality(context);
-                    SalesRecordsFuntionality salesRecordsFuntionality = new SalesRecordsFuntionality(context);
-
-                    Console.WriteLine("\n--------User login successfully--------- \n");
-
-                    while (run)
+                    if (user.Name == name && user.Password == password)
                     {
-                        Console.WriteLine("""
+                        PetsFunctionality petsFunctionality = new PetsFunctionality(context);
+                        UserFunctionality userFunctionality = new UserFunctionality(context);
+                        FeedingSchedulFuntionality feedingSchedulFuntionality = new FeedingSchedulFuntionality(context);
+                        PetPurchaseFuntionality petPurchaseFuntionality = new PetPurchaseFuntionality(context);
+                        SalesRecordsFuntionality salesRecordsFuntionality = new SalesRecordsFuntionality(context);
+
+                        Console.WriteLine("\n--------User login successfully--------- \n");
+
+                        while (run)
+                        {
+                            Console.WriteLine("""
                         ------------This Is Your Pet Shop Inventory Key Funtionality!-------------  
 
                         Inpute 1: Admin Can Change Password: 
@@ -53,17 +57,17 @@ namespace PetShopInventory
                         Input 5: Pets Sales Record Add Shop Owner: 
                         Input 6: Logout In Pet Shop Inventory:
                         """);
-                        int condition = int.Parse(Console.ReadLine());
+                            int condition = int.Parse(Console.ReadLine());
 
-                        switch (condition)
-                        {
-                            case 1:
-                                userFunctionality.ChangePassword();
-                                break;
+                            switch (condition)
+                            {
+                                case 1:
+                                    userFunctionality.ChangePassword();
+                                    break;
 
-                            case 2:
-                                Console.WriteLine($"---{user.Name} Hello, You Can Operate In This Below Options----");
-                                Console.WriteLine("""
+                                case 2:
+                                    Console.WriteLine($"---{user.Name} Hello, You Can Operate In This Below Options----");
+                                    Console.WriteLine("""
                             Inpute 1: Add Cage And Pets In Store:  
                             Inpute 2: Show All Pets Are Available:
                             Input 3: Update To A Pet:
@@ -74,153 +78,155 @@ namespace PetShopInventory
                             Input 8: Add A PetCage:
                             Input 9: Delete Pet In A PetCage:
                             """);
-                                int condition2 = int.Parse(Console.ReadLine());
-                                switch (condition2)
-                                {
-                                    case 1:
-                                        //Add Pet cage and pets...
-                                        petsFunctionality.AddCageAndPet();
-                                        break;
+                                    int condition2 = int.Parse(Console.ReadLine());
+                                    switch (condition2)
+                                    {
+                                        case 1:
+                                            //Add Pet cage and pets...
+                                            petsFunctionality.AddCageAndPet();
+                                            break;
 
-                                    case 2:
-                                        //Show All My Cage Of Pets...
-                                        petsFunctionality.ShowCageOfPets();
-                                        break;
+                                        case 2:
+                                            //Show All My Cage Of Pets...
+                                            petsFunctionality.ShowCageOfPets();
+                                            break;
 
-                                    case 3:
-                                        petsFunctionality.UpdatePets();
-                                        break;
+                                        case 3:
+                                            petsFunctionality.UpdatePets();
+                                            break;
 
-                                    case 4:
-                                        petsFunctionality.UpdateCage();
-                                        break;
+                                        case 4:
+                                            petsFunctionality.UpdateCage();
+                                            break;
 
-                                    case 5:
-                                        petsFunctionality.DeletePet();
-                                        break;
+                                        case 5:
+                                            petsFunctionality.DeletePet();
+                                            break;
 
-                                    case 6:
-                                        petsFunctionality.DeletePetCage();
-                                        break;
+                                        case 6:
+                                            petsFunctionality.DeletePetCage();
+                                            break;
 
-                                    case 7:
-                                        petsFunctionality.AddOnlyPets();
-                                        break;
+                                        case 7:
+                                            petsFunctionality.AddOnlyPets();
+                                            break;
 
-                                    case 8:
-                                        petsFunctionality.CreatePetCage();
-                                        break;
+                                        case 8:
+                                            petsFunctionality.CreatePetCage();
+                                            break;
 
-                                    case 9:
-                                        petsFunctionality.DeletePetInCage();
-                                        break;
+                                        case 9:
+                                            petsFunctionality.DeletePetInCage();
+                                            break;
 
-                                    default:
-                                        Console.WriteLine("Don't Mach Any Case. Put in Right Case");
-                                        break;
-                                }
-                                break;
+                                        default:
+                                            Console.WriteLine("Don't Mach Any Case. Put in Right Case");
+                                            break;
+                                    }
+                                    break;
 
-                            case 3:
-                                Console.WriteLine("-----This is my pet feeding schedul based on the pet cage-----");
-                                Console.WriteLine("""
+                                case 3:
+                                    Console.WriteLine("-----This is my pet feeding schedul based on the pet cage-----");
+                                    Console.WriteLine("""
                                 Input 1: Add Feeding Schedule For A Peta Of Cage:
                                 Input 2: Show All Feeding Schedules For Pets Of Cage:
                                 Input 3: Update Schedule For Pets Of Aage Schedule: 
                                 Input 4: Delete Schedule: 
                                 """);
-                                int condition3 = int.Parse(Console.ReadLine());
-                                switch (condition3)
-                                {
-                                    case 1:
-                                        feedingSchedulFuntionality.AddFeedSchedul();
-                                        break;
+                                    int condition3 = int.Parse(Console.ReadLine());
+                                    switch (condition3)
+                                    {
+                                        case 1:
+                                            feedingSchedulFuntionality.AddFeedSchedul();
+                                            break;
 
-                                    case 2:
-                                        feedingSchedulFuntionality.ShowFeeingScheduls();
-                                        break;
+                                        case 2:
+                                            feedingSchedulFuntionality.ShowFeeingScheduls();
+                                            break;
 
-                                    case 3:
-                                        feedingSchedulFuntionality.UpdateFeeingScheduls();
-                                        break;
+                                        case 3:
+                                            feedingSchedulFuntionality.UpdateFeeingScheduls();
+                                            break;
 
-                                    case 4:
-                                        feedingSchedulFuntionality.DeleteSchedul();
-                                        break;
+                                        case 4:
+                                            feedingSchedulFuntionality.DeleteSchedul();
+                                            break;
 
-                                    default:
-                                        Console.WriteLine("Don't Mach Any Case. Put in Right Case");
-                                        break;
-                                }
-                                break;
+                                        default:
+                                            Console.WriteLine("Don't Mach Any Case. Put in Right Case");
+                                            break;
+                                    }
+                                    break;
 
-                            case 4:
-                                Console.WriteLine("-----Here Shop Owner See Availabe Pet Purchases Funtionality-----");
-                                Console.WriteLine("""
+                                case 4:
+                                    Console.WriteLine("-----Here Shop Owner See Availabe Pet Purchases Funtionality-----");
+                                    Console.WriteLine("""
                                 Input 1: Add Pet Purchase Inforamtion: 
                                 Input 2: Show All Pet Purchase Informations: 
                                 Input 3: Add Multiplr Pet Purchase Information: 
                                 """);
-                                int condition4 = int.Parse(Console.ReadLine());
-                                switch (condition4)
-                                {
-                                    case 1:
-                                        petPurchaseFuntionality.AddPetParchaseInfo();
-                                        break;
+                                    int condition4 = int.Parse(Console.ReadLine());
+                                    switch (condition4)
+                                    {
+                                        case 1:
+                                            petPurchaseFuntionality.AddPetParchaseInfo();
+                                            break;
 
-                                    case 2:
-                                        petPurchaseFuntionality.ShowAllPurchases();
-                                        break;
+                                        case 2:
+                                            petPurchaseFuntionality.ShowAllPurchases();
+                                            break;
 
-                                    case 3:
-                                        petPurchaseFuntionality.AddPetPurchaseInfo();
-                                        break;
+                                        case 3:
+                                            petPurchaseFuntionality.AddPetPurchaseInfo();
+                                            break;
 
-                                    default:
-                                        Console.WriteLine("Don't Mach Any Case. Put in Right Case");
-                                        break;
-                                }
-                                break;
+                                        default:
+                                            Console.WriteLine("Don't Mach Any Case. Put in Right Case");
+                                            break;
+                                    }
+                                    break;
 
-                            case 5:
-                                Console.WriteLine("""
+                                case 5:
+                                    Console.WriteLine("""
                                 Input 1: Add Sales Record: 
                                 Input 2: Show All Records: 
                                 """);
-                                int condition5 = int.Parse(Console.ReadLine());
-                                switch (condition5)
-                                {
-                                    case 1:
-                                        salesRecordsFuntionality.AddSalesRecord();
-                                        break;
+                                    int condition5 = int.Parse(Console.ReadLine());
+                                    switch (condition5)
+                                    {
+                                        case 1:
+                                            salesRecordsFuntionality.AddSalesRecord();
+                                            break;
 
-                                    case 2:
-                                        salesRecordsFuntionality.ShowALLRecords();  
-                                        break;
+                                        case 2:
+                                            salesRecordsFuntionality.ShowALLRecords();
+                                            break;
 
-                                    default:
-                                        Console.WriteLine("Don't Mach Any Case. Put in Right Case");
-                                        break;
-                                }
-                                break;
+                                        default:
+                                            Console.WriteLine("Don't Mach Any Case. Put in Right Case");
+                                            break;
+                                    }
+                                    break;
 
-                            case 6:
-                                run = false;
-                                break;
-                                
-                            case 7:
-                                break;
+                                case 6:
+                                    Console.WriteLine("\n----------Logout has been succesfully--------\n");
+                                    run = false;
+                                    break;
 
-                            default:
-                                Console.WriteLine("Don't Mach Any Case. Put in Right Case");
-                                break;
+                                case 7:
+                                    break;
+
+                                default:
+                                    Console.WriteLine("Don't Mach Any Case. Put in Right Case");
+                                    break;
+                            }
                         }
                     }
-                }
-                else
-                {
-                    Console.WriteLine("\n--------user name or password don't match, plese tryagain--------\n");
-                    run = false;
+                    else
+                    {
+                        Console.WriteLine("\n--------user name or password don't match, plese tryagain--------\n");
+                        run = false;
+                    }
                 }
             }
         }
