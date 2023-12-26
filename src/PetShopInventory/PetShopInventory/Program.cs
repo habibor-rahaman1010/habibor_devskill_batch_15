@@ -219,6 +219,8 @@ namespace PetShopInventory
                                 case 7:
                                     Console.WriteLine("""
                                      Input 1: Show Monthy Purchas Report: 
+                                     Input 2: Show Monthly Sales Report: 
+                                     Input 3: Show Mothly Sales And Purchase Report And Loss/Profit: 
                                      """);
                                     int condition6 = int.Parse(Console.ReadLine());
                                     switch (condition6)
@@ -226,7 +228,12 @@ namespace PetShopInventory
                                         case 1:
                                             repotsFuntionality.ShowMonthlyPurchase();
                                             break;
-
+                                        case 2:
+                                            repotsFuntionality.ShowMonthlySales();
+                                            break;
+                                        case 3:
+                                            repotsFuntionality.ProfitAndLoss();
+                                            break;
                                         default:
                                             Console.WriteLine("Don't Mach Any Case. Put in Right Case");
                                             break;
