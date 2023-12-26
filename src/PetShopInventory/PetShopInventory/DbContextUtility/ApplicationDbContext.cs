@@ -4,6 +4,7 @@ using PetShopInventory.DbContextUtility;
 using PetShopInventory.FeedingScheduleUtitlity;
 using PetShopInventory.PetsPurchaseUtility;
 using PetShopInventory.PetsUtility;
+using PetShopInventory.SalesRecords;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,6 +57,12 @@ namespace PetShopInventory
               .HasForeignKey(p => p.PetPurchaseId)
               .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<PetSalesRecord>()
+              .HasMany(pp => pp.SoldPets)
+              .WithOne(p => p.PetSale)
+              .HasForeignKey(p => p.PetSaleId)
+              .OnDelete(DeleteBehavior.Cascade);
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -69,5 +76,6 @@ namespace PetShopInventory
         public DbSet<Pet> Pets { get; set; }
         public DbSet<FeedingSchedule> FeedingSchedules { get; set; }
         public DbSet<PetPurchase> PetPurchases { get; set; }
+        public DbSet<PetSalesRecord> PetSalesRecords { get; set; }
     }
 }

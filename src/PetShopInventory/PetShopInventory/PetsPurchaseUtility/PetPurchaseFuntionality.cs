@@ -53,9 +53,9 @@ namespace PetShopInventory.PetsPurchaseUtility
                     string conatct = Console.ReadLine();
 
                     PetPurchase purchase = new PetPurchase();
-                    purchase.Name = name;
+                    purchase.SellerContact = name;
                     purchase.Email = email;
-                    purchase.Contact = conatct;
+                    purchase.SellerContact = conatct;
                     purchase.PurchaseDate = DateTime.Now;
                     purchase.PurchasedPets = purchase.PurchasedPets ?? new List<Pet>();
                     purchase.PurchasedPets.Add(pet);
@@ -120,9 +120,9 @@ namespace PetShopInventory.PetsPurchaseUtility
 
                     PetPurchase purchase = new PetPurchase
                     {
-                        Name = name,
+                        SellerName = name,
                         Email = email,
-                        Contact = contact,
+                        SellerContact = contact,
                         PurchaseDate = DateTime.Now,
                         PurchasedPets = selectedPets
                     };
@@ -152,7 +152,7 @@ namespace PetShopInventory.PetsPurchaseUtility
 
             foreach (PetPurchase item in petPurchaseWoner)
             {
-                Console.WriteLine($"Id {item.Id} | Name:{item.Name} | Purchase Date: {item.PurchaseDate}");
+                Console.WriteLine($"Id {item.Id} | Name:{item.SellerName} | Purchase Date: {item.PurchaseDate}");
 
                 if (item.PurchasedPets != null)
                 {

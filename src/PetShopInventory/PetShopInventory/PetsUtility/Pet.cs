@@ -1,4 +1,5 @@
 ﻿using PetShopInventory.PetsPurchaseUtility;
+using PetShopInventory.SalesRecords;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,5 +20,7 @@ namespace PetShopInventory.PetsUtility
         public PetCage Cage { get; set; }
         public int? PetPurchaseId { get; set; }
         public PetPurchase PetPurchase { get; set; }
+        public int? PetSaleId { get; set; }
+        public PetSalesRecord PetSale { get; set; }
     }
 }

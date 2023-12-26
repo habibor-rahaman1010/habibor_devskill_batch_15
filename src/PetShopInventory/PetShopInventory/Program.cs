@@ -5,6 +5,7 @@ using PetShopInventory.FeedingScheduleUtitlity;
 using PetShopInventory.PetsCURDoperation;
 using PetShopInventory.PetsPurchaseUtility;
 using PetShopInventory.PetsUtility;
+using PetShopInventory.SalesRecords;
 using System;
 using System.Threading.Channels;
 
@@ -36,6 +37,7 @@ namespace PetShopInventory
                     UserFunctionality userFunctionality = new UserFunctionality(context);
                     FeedingSchedulFuntionality feedingSchedulFuntionality = new FeedingSchedulFuntionality(context);
                     PetPurchaseFuntionality petPurchaseFuntionality = new PetPurchaseFuntionality(context);
+                    SalesRecordsFuntionality salesRecordsFuntionality = new SalesRecordsFuntionality(context);
 
                     Console.WriteLine("\n--------User login successfully--------- \n");
 
@@ -178,6 +180,30 @@ namespace PetShopInventory
                                         Console.WriteLine("Don't Mach Any Case. Put in Right Case");
                                         break;
                                 }
+                                break;
+
+                            case 5:
+                                Console.WriteLine("""
+                                Input 1: 
+                                """);
+                                int condition5 = int.Parse(Console.ReadLine());
+                                switch (condition5)
+                                {
+                                    case 1:
+
+                                        break;
+
+                                    default:
+                                        Console.WriteLine("Don't Mach Any Case. Put in Right Case");
+                                        break;
+                                }
+                                break;
+
+                            case 6:
+                                run = false;
+                                break;
+                                
+                            case 7:
                                 break;
 
                             default:

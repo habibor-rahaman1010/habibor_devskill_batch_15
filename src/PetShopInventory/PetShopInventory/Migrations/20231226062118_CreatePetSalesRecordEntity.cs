@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PetShopInventory.Migrations
 {
     /// <inheritdoc />
-    public partial class CreatePetShopInventoryEntity : Migration
+    public partial class CreatePetSalesRecordEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -31,14 +31,30 @@ namespace PetShopInventory.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SellerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SellerContact = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Contact = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PurchaseDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PetPurchases", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PetSalesRecords",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BuyerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BuyerContact = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TypeOfPet = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SalesDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PetSalesRecords", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -88,7 +104,8 @@ namespace PetShopInventory.Migrations
                     PetPrice = table.Column<int>(type: "int", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CageId = table.Column<int>(type: "int", nullable: false),
-                    PetPurchaseId = table.Column<int>(type: "int", nullable: true)
+                    PetPurchaseId = table.Column<int>(type: "int", nullable: true),
+                    PetSaleId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -103,6 +120,12 @@ namespace PetShopInventory.Migrations
                         name: "FK_Pets_PetPurchases_PetPurchaseId",
                         column: x => x.PetPurchaseId,
                         principalTable: "PetPurchases",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Pets_PetSalesRecords_PetSaleId",
+                        column: x => x.PetSaleId,
+                        principalTable: "PetSalesRecords",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -126,6 +149,11 @@ namespace PetShopInventory.Migrations
                 name: "IX_Pets_PetPurchaseId",
                 table: "Pets",
                 column: "PetPurchaseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pets_PetSaleId",
+                table: "Pets",
+                column: "PetSaleId");
         }
 
         /// <inheritdoc />
@@ -145,6 +173,9 @@ namespace PetShopInventory.Migrations
 
             migrationBuilder.DropTable(
                 name: "PetPurchases");
+
+            migrationBuilder.DropTable(
+                name: "PetSalesRecords");
         }
     }
 }
