@@ -29,7 +29,6 @@ namespace PetShopInventory.ShopReports
 
             foreach (PetPurchase purchase in monthlyPurchases)
             {
-                Console.WriteLine("Hello programmer");
                 Console.WriteLine($"Purchase Id: {purchase.Id}");
                 Console.WriteLine($"Seller Name: {purchase.SellerName}");
                 Console.WriteLine($"Purchase Date: {purchase.PurchaseDate}");
@@ -39,12 +38,21 @@ namespace PetShopInventory.ShopReports
                 {
                     foreach (Pet pet in purchase.PurchasedPets)
                     {
-                        Console.WriteLine($"  - {pet.Name}, {pet.Type}");
+                        Console.WriteLine($"date: {purchase.PurchaseDate} price: {pet.PetPrice}, PetType: {pet.Type}");
                     }
 
                     Console.WriteLine();
                 }
             }
+
+            // Calculate total sales amount for the month
+            decimal totalSalesAmount = monthlyPurchases.Sum(s => s.Amount);
+
+            // Calculate total purchase amount for the month
+            decimal totalPurchaseAmount = monthlyPurchases.Sum(p => p.Amount);
+
+            // Display or use the aggregated results
+
         }
     }
 }
