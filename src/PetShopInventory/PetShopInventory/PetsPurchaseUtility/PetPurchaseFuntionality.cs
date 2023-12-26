@@ -74,8 +74,6 @@ namespace PetShopInventory.PetsPurchaseUtility
             }
         }
 
-
-
         public void AddPetPurchaseInfo()
         {
             Console.WriteLine("\n--------Those Pets Are Available In This Pet Shop Inventory. Which Ones Do You Want to Purchase?--------\n");
@@ -140,9 +138,6 @@ namespace PetShopInventory.PetsPurchaseUtility
                 Console.WriteLine("Cage not found.");
             }
         }
-
-
-
 
         public void ShowAllPurchases()
         {

@@ -184,13 +184,18 @@ namespace PetShopInventory
 
                             case 5:
                                 Console.WriteLine("""
-                                Input 1: 
+                                Input 1: Add Sales Record: 
+                                Input 2: Show All Records: 
                                 """);
                                 int condition5 = int.Parse(Console.ReadLine());
                                 switch (condition5)
                                 {
                                     case 1:
+                                        salesRecordsFuntionality.AddSalesRecord();
+                                        break;
 
+                                    case 2:
+                                        salesRecordsFuntionality.ShowALLRecords();  
                                         break;
 
                                     default:
