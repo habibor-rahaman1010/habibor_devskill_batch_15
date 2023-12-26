@@ -45,7 +45,7 @@ namespace PetShopInventory.PetsPurchaseUtility
 
                 if (pet != null)
                 {
-                    Console.WriteLine("Enter Parchase Owner Name: ");
+                    Console.WriteLine("Enter Saller Name: ");
                     string name = Console.ReadLine();
                     Console.WriteLine("Enter her Email: ");
                     string email = Console.ReadLine();
@@ -53,7 +53,7 @@ namespace PetShopInventory.PetsPurchaseUtility
                     string conatct = Console.ReadLine();
 
                     PetPurchase purchase = new PetPurchase();
-                    purchase.SellerContact = name;
+                    purchase.SellerName = name;
                     purchase.Email = email;
                     purchase.SellerContact = conatct;
                     purchase.PurchaseDate = DateTime.Now;
@@ -111,7 +111,7 @@ namespace PetShopInventory.PetsPurchaseUtility
 
                 if (selectedPets.Any())
                 {
-                    Console.WriteLine("Enter Purchase Owner Name:");
+                    Console.WriteLine("Enter Saller Name:");
                     string name = Console.ReadLine();
                     Console.WriteLine("Enter her Email:");
                     string email = Console.ReadLine();
