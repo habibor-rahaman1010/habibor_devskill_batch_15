@@ -17,8 +17,7 @@ namespace PetShopInventory.PetsUtility
         public string Type { get; set; }
         public int CageId {  get; set; }
         public PetCage Cage { get; set; }
-
-        /*public int PetPurchaseId { get; set; }
-        public PetPurchase PetPurchase { get; set; }*/
+        public int? PetPurchaseId { get; set; }
+        public PetPurchase PetPurchase { get; set; }
     }
 }

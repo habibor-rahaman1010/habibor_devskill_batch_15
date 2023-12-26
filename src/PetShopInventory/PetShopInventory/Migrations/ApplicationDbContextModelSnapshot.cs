@@ -186,11 +186,14 @@ namespace PetShopInventory.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PetShopInventory.PetsPurchaseUtility.PetPurchase", null)
+                    b.HasOne("PetShopInventory.PetsPurchaseUtility.PetPurchase", "PetPurchase")
                         .WithMany("PurchasedPets")
-                        .HasForeignKey("PetPurchaseId");
+                        .HasForeignKey("PetPurchaseId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Cage");
+
+                    b.Navigation("PetPurchase");
                 });
 
             modelBuilder.Entity("PetShopInventory.PetsPurchaseUtility.PetPurchase", b =>

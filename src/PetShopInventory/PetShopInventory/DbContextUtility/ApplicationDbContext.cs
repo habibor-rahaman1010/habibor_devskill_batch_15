@@ -50,11 +50,11 @@ namespace PetShopInventory
                 .HasForeignKey(fs => fs.CageId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            /*modelBuilder.Entity<Pet>()
-                  .HasOne(p => p.PetPurchase)
-                  .WithMany(pp => pp.PurchasedPets)
-                  .HasForeignKey(p => p.PetPurchaseId)
-                  .OnDelete(DeleteBehavior.Cascade);*/
+            modelBuilder.Entity<PetPurchase>()
+              .HasMany(pp => pp.PurchasedPets)
+              .WithOne(p => p.PetPurchase)
+              .HasForeignKey(p => p.PetPurchaseId)
+              .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);
         }

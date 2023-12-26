@@ -12,8 +12,8 @@ using PetShopInventory;
 namespace PetShopInventory.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231220161047_EditPetShopEntity")]
-    partial class EditPetShopEntity
+    [Migration("20231226051457_CreatePetShopInventoryEntity")]
+    partial class CreatePetShopInventoryEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -189,16 +189,19 @@ namespace PetShopInventory.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PetShopInventory.PetsPurchaseUtility.PetPurchase", null)
-                        .WithMany("PurchasedPetsList")
-                        .HasForeignKey("PetPurchaseId");
+                    b.HasOne("PetShopInventory.PetsPurchaseUtility.PetPurchase", "PetPurchase")
+                        .WithMany("PurchasedPets")
+                        .HasForeignKey("PetPurchaseId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Cage");
+
+                    b.Navigation("PetPurchase");
                 });
 
             modelBuilder.Entity("PetShopInventory.PetsPurchaseUtility.PetPurchase", b =>
                 {
-                    b.Navigation("PurchasedPetsList");
+                    b.Navigation("PurchasedPets");
                 });
 
             modelBuilder.Entity("PetShopInventory.PetsUtility.PetCage", b =>

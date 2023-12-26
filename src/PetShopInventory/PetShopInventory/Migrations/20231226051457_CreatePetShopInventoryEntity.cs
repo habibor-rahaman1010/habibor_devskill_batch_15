@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PetShopInventory.Migrations
 {
     /// <inheritdoc />
-    public partial class CreatePetShopEntity : Migration
+    public partial class CreatePetShopInventoryEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -88,7 +88,7 @@ namespace PetShopInventory.Migrations
                     PetPrice = table.Column<int>(type: "int", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CageId = table.Column<int>(type: "int", nullable: false),
-                    PetPurchaseId = table.Column<int>(type: "int", nullable: false)
+                    PetPurchaseId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
