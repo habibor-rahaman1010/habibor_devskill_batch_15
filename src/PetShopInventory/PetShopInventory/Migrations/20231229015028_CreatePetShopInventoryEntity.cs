@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PetShopInventory.Migrations
 {
     /// <inheritdoc />
-    public partial class CreatePetSalesRecordEntity : Migration
+    public partial class CreatePetShopInventoryEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

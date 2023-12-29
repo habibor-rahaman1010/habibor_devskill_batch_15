@@ -12,8 +12,8 @@ using PetShopInventory;
 namespace PetShopInventory.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231226062118_CreatePetSalesRecordEntity")]
-    partial class CreatePetSalesRecordEntity
+    [Migration("20231229015028_CreatePetShopInventoryEntity")]
+    partial class CreatePetShopInventoryEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

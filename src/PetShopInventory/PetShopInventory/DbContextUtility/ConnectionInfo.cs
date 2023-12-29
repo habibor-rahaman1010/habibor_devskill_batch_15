@@ -8,6 +8,6 @@ namespace PetShopInventory.DbContextUtility
 {
     static class ConnectionInfo
     {
-        public static string ConnectionString = "Server=HABIBOR-RAHAMAN\\SQLEXPRESS;Database=PetShopInventoryDB;User Id=habibor144369;Password=c++c++c#;Trust Server Certificate=True;";
+        public static string ConnectionString = "Server=HABIBOR-RAHAMAN\\SQLEXPRESS;Database=CSharpB15;User Id=csharpb15;Password=123456;Trust Server Certificate=True;";
     }
 }
