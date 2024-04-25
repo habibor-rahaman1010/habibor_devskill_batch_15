@@ -1,0 +1,267 @@
+1. Single Responsibility Principle (SRP)
+A class should have one, only one reason to change.
+
+SOLID এর প্রথম principle হলো Single Responsibility Principle (SRP). এটা খুবই সহজ কনসেপ্ট। SRP এর শর্ত হলো একটা Class এর শুধুমাত্র একটাই কাজ/উদ্দেশ্য থাকবে। অর্থাৎ প্রতিটি ভিন্ন-ভিন্ন কাজের জন্য ভিন্ন-ভিন্ন Class থাকবে।
+
+চলুন দেখা যাক কিভাবে SRP violate হচ্ছেঃ
+
+class UserInfo
+{
+    public string GetUserName()
+    {
+        return "name";
+    }
+
+    // Here SRP violates
+    public string SendMailToUser()
+    {
+        return "success";
+    }
+}
+
+
+
+উপরের UserInfo ক্লাসে দুটি মেথড আছে। একটা getUserName যেটা ইউজার এর নাম রিটার্ন করে, অন্যটা sendMailToUser যেটা দিয়ে ইউজারকে ইমেইল পাঠানো হয়। তারমানে এই ক্লাস এর জব দুইটা, ১) ইউজার এর নাম বা তথ্য দেয়া এবং ২) ইমেইল পাঠানো।
+
+আর একের অধিক কাজ/উদ্দেশ্যে থাকলেই SRP violate হচ্ছে। কারণ SRP বলে যে, একটা ক্লাস এর একটার বেশি দায়িত্ব থাকবেনা, ফলে পরবর্তীতে ওই ক্লাসে চেঞ্জ আসবে শুধুমাত্র ওই একটা জব/উদ্দেশ্যের কারণেই। এক্ষেত্রে আমরা ইমেইল পাঠানোর জন্য আলাদা ক্লাস ডিজাইন করবো।
+
+এখানে একটা বিষয় খেয়াল রাখতে হবে যে, রিয়েল-লাইফে কাজ করতে গিয়ে যদি এভাবে প্রতিটা স্পেসিফিক কাজের জন্য আলাদা আলাদা ক্লাস ডিজাইন করি তাহলে পরে এতো ক্লাস মেইনটেইন করা কষ্টকর হবে এবং এটা মোটেও ভালো প্রাকটিস না। SRP বলেনা যে একটা ক্লাস এর শুধুমাত্র একটাই মেথড থাকবে। একটা ক্লাসে আমরা যত ইচ্ছা মেথড ও প্রপার্টি রাখিনা কেন, সবকিছুই যাতে একই উদ্দেশ্য নিয়ে কাজ করে।
+
+চলুন আমরা UserInfo ক্লাসে SRP refactor করিঃ
+
+public class UserInfo
+{
+    public string GetUserName()
+    {
+        return "name";
+    }
+
+    public string GetUserAddress()
+    {
+        return "address";
+    }
+
+    public string GetUserRole()
+    {
+        return "role";
+    }
+}
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2. Open-Closed Principle (OCP)
+You should be able to extend a classes behavior, without modifying it.
+
+Robert C. Martin এই principle কে maintainable এবং reusable কোড এর ফাউন্ডেশন বলে উল্লেখ করেছেন।
+
+OCP বলে যে, আমাদের সফটওয়্যার এর এনটিটি গুলো (class, function, module) এমনভাবে ডিজাইন করা উচিত যাতে ভবিষ্যতে নতুন রিকোয়ারমেন্ট এলেও এক্সিস্টিং কোড মোডিফাই না করে বরং এক্সিস্টিং কোডকে এক্সটেন্ড করেই এর behavior কে পরিবর্তন করা যায়। এখানে উল্লেখ্য, behavior বলতে সোর্স কোডের আচরণগত পরিবর্তনকেই বুঝায়। সোজা কোথায়, আমাদের সফ্টওয়ার এনটিটি গুলো হবে open for extension but closed for modification.
+
+আমরা যদি যথাযথভাবে OCP প্রয়োগ করতে পারি তবে existing সোর্স কোড মোডিফাই না করেই নতুন ফিচার এড করা যাবে। OCP কনফার্ম করে যে, আমাদের ডিজাইন করা এনটিটি সমূহ ভবিষ্যতের রিকোয়ারমেন্ট এর চাহিদা পূরণে নতুন ও ভিন্ন উপায়ে আচরণ করতে পারবে। এবং সেটা এক্সিস্টিং সোর্স কোডের বড় কোনো পরিবর্তন ছাড়াই।
+
+চলুন নিচের উদাহরণটি দেখিঃ
+
+public class PaymentService
+{
+    public string PayWithPaypal()
+    {
+        // pay with paypal
+        return "Paid with Paypal";
+    }
+
+    public string PayWithCreditCard()
+    {
+        // pay with credit card
+        return "Paid with Credit Card";
+    }
+
+    public string PayWithWireTransfer()
+    {
+        // pay with wire transfer
+        return "Paid with Wire Transfer";
+    }
+}
+
+-------------------------------------
+public class PaymentController
+{
+    public string Pay(Request request, PaymentService paymentService)
+    {
+        string paymentType = request.Input("payment_type");
+	
+	// Here OCP violates !!!
+        switch (paymentType)
+        {
+            case "Paypal":
+                string responsePaypal = paymentService.PayWithPaypal();
+                return responsePaypal;
+            case "Credit Card":
+                string responseCreditCard = paymentService.PayWithCreditCard();
+                return responseCreditCard;
+            default:
+                string responseWireTransfer = paymentService.PayWithWireTransfer();
+                return responseWireTransfer;
+        }
+    }
+}
+
+
+ধরা যাক, আমাদের সিস্টেমে পেমেন্টের জন্য একটি paymentController ক্লাস আছে, এখানে pay মেথড এর মাধ্যমে পেমেন্ট নেয়া হয়। আর paymentService নামক ক্লাস আছে এখানে বিভিন্ন ধরণের পেমেন্ট সার্ভিস এর জন্য আলাদা আলাদা function রয়েছে। pay মেথড এর পেমেন্ট টাইপ এর উপর ভিত্তি করে পেমেন্ট সার্ভিস এর ধরণ সিলেক্ট করা হয়।
+
+এখন এখানে যদি নতুন কোনো পেমেন্ট গেটওয়ে যোগ করতে চাই তাহলে বিদ্যমান দুইটা ক্লাসই মোডিফাই করতে হবে। এখানেই OCP violation হয়েছে। যেহেতু OCP বলেছে বিদ্যমান সোর্স কোড হবে closed for modification, সেখানে আমাদের কোড মোডিফাই করতে হচ্ছে।
+
+চলুন দেখি কিভাবে OCP violation দূর করতে পারিঃ
+
+public interface IPaymentInterface
+{
+    void Pay();
+}
+
+-------------------------------------
+
+public class PayWithPaypal : IPaymentInterface
+{
+    public void Pay()
+    {
+        // TODO: Implement pay() method.
+    }
+}
+
+public class PayWithCreditCard : IPaymentInterface
+{
+    public void Pay()
+    {
+        // TODO: Implement pay() method.
+    }
+}
+
+public class PayWithWireTransfer : IPaymentInterface
+{
+    public void Pay()
+    {
+        // TODO: Implement pay() method.
+    }
+}
+
+
+--------------------------------
+
+
+public class PaymentService
+{
+    public IPaymentInterface Initialize(string paymentType)
+    {
+        switch (paymentType)
+        {
+            case "Paypal":
+                return new PayWithPaypal();
+            case "Credit Card":
+                return new PayWithCreditCard();
+            default:
+                return new PayWithWireTransfer();
+        }
+    }
+}
+
+-------------------------
+
+public class PaymentController
+{
+    public void Pay(Request request, PaymentService paymentService)
+    {
+        string paymentType = request.Input("payment_type");
+
+        // OCP refactor
+        IPaymentInterface payment = paymentService.Initialize(paymentType);
+        payment.Pay();
+    }
+}
+
+
+
+এখানে আমরা একটা interface করেছি paymentInterface নামে, যেখানে শুধুমাত্র pay মেথড আছে। যেসকল class এই interface কে ইমপ্লিমেন্ট করবে তাদেরকে অবশ্যই pay মেথডটি ডিফাইন করতে হবে।
+
+এরপর আমরা বিভিন্ন ধরণের পেমেন্ট গেটওয়ের জন্য আলাদা-আলাদা class করেছি যারা সবাই paymentInterface কে ইমপ্লিমেন্ট করেছে। আর paymentService ক্লাসে initialize মেথড এর মাধ্যমে পেমেন্ট গেটওয়ে নির্বাচন করছি এবং paymentController ক্লাস এর pay মেথডও পরিবর্তন করেছি, এখানে পেমেন্ট টাইপ দিয়ে paymentService থেকে নির্দিষ্ট পেমেন্ট গেটওয়ে সিলেক্ট করা হয়।
+
+যেহেতু সকল পেমেন্ট গেটওয়ের ক্লাসই paymentInterface কে ইমপ্লিমেন্ট করছে সেহেতু তারা অবশ্যই pay মেথড ও ডিফাইন করেছে। তারপর ওই মেথডে কল করে পেমেন্ট সম্পন্ন হবে।
+
+এখন যদি আমাদেরকে নতুন পেমেন্ট গেটওয়ে এড করতে বলা হয় তাহলে খুব সহজেই সেটা করা যাবে। যা করতে হবেঃ
+
+নতুন পেমেন্ট গেটওয়ের জন্য আলাদা ক্লাস হবে যেটা paymentInterface কে ইমপ্লিমেন্ট করবে।
+paymentService ক্লাস এর initalize মেথডে নতুন পেমেন্ট গেটওয়ের জন্য কন্ডিশন এড হবে এবং নতুন ক্লাস এর অবজেক্ট রিটার্ন হবে।
+অর্থাৎ, existing কোডে তেমন পরিবর্তন ছাড়াই আমরা নতুন পেমেন্ট গেটওয়ে এড করতে পেরেছি।
+
+কিভাবে বুঝবো কোথায় OCP apply করতে হবেঃ
+
+OCP’র মূল উদ্দেশ্য হলো কোনো class এর behavior কে বড় ধরনের মোডিফিকেশন ছাড়াই এক্সটেন্ড করতে পারা। তারমানে এই নয় যে আমরা সব ক্লাসে OCP এপ্লাই করবো। সিস্টেম এর যেসব behavior প্রতিনিয়ত পরিবর্তনের আশংকা আছে সেসব ক্ষেত্রেই OCP এপ্লাই করে ভালো ফল পাওয়া যায়। সিস্টেম এর ডোমেইন সম্পর্কে জানা থাকলে বুঝতে সহজ হয় যে কোথায় OCP ইমপ্লিমেন্ট করা প্রয়োজন।
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3. Liskov Substitution Principle (LSP)
+Objects in a program should be replaceable with instances of their subtypes without altering the correctness of that program.
+
+Subclass/derived class should be substitutable for their base class.
+
+বারবারা লিসকভের (Barbara Liskov) নামানুসারে এর নামকরণ করা হয়েছে। তিনি 1987 সালে এটি উপস্থাপন করেছিলেন। এখানে Substitution বলতে বুঝায়- প্রতিস্থাপন /কোনো কিছুর সাথে রিপ্লেস করা।
+
+Liskov Substitution Principle বলে যে, কোনো object এর ইনস্ট্যান্স কে ওই object এর base/parent class এর ইনস্ট্যান্স দিয়ে রিপ্লেস করা যাবে এবং এজন্য existing code এর correctness বা বিশুদ্ধতা পরিবর্তন করতে হবেনা।
+
+নিচের উদাহরণটি দেখুনঃ
+
+public abstract class PaymentStatusService
+{
+    public abstract string GetStatus(int paymentId);
+}
+
+---------------------------------------------------------
+
+public class CreditCardPaymentStatus : PaymentStatusService
+{
+    public override string GetStatus(int paymentId)
+    {
+        return "success";
+    }
+}
+
+public class SonaliPaymentStatus : PaymentStatusService
+{
+    public override string GetStatus(int paymentId)
+    {
+        return ['status' => 'success'];
+    }
+}
+-----------------------------------------------------
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        PaymentStatusService paymentStatus = new CreditCardPaymentStatus();
+        string status1 = paymentStatus.GetStatus(1);
+        Console.WriteLine(status1);
+
+        paymentStatus = new SonaliPaymentStatus();
+        string status2 = paymentStatus.GetStatus(1);
+        Console.WriteLine(status2);
+	// Here the LSP violates !!!
+    }
+}
+
+
+
+এই কোডে দেখা যাচ্ছে, পেমেন্ট স্টেটাস জানার জন্য একটা abstract class আছে paymentStatusService নামে এবং এই ক্লাসে getStatus নাম একটা abstract মেথড আছে। বিভিন্ন পেমেন্ট গেটওয়ের জন্য আলাদা আলাদা class করা হয়েছে যারা paymentStatusService কে extend করে। যেহেতু abstract ক্লাসকে এক্সটেন্ড করলে তার abstract মেথডকে ইমপ্লিমেন্ট করতে হবে, সেহেতু সকল ক্লাস getStatus মেথড ডিফাইন করেছে। সবশেষে আমরা CreditCardPaymentStatus class এর instance তৈরী করেছি এবং getStatus মেথড কল করেছি credit card পেমেন্ট এর স্টেটাস জানার জন্য।
+
+আর LSP বলতে চায়, আমরা CreditCardPaymentStatus class এর instance তৈরী করেছি, সেটা যেনো SonaliPaymentStatus এর instance দিয়ে রিপ্লেস করা যায়। কারণ যেহেতু CreditCardPaymentStatus এবং SonaliPaymentStatus দুইটি ক্লাসই একই base/parent class এর child.
+
+কিন্তু আমাদের কোডে দেখা যাচ্ছে, আমরা এই রিপ্লেসমেন্ট করতে পারবোনা। কারণ, CreditCardPaymentStatus এর getStatus মেথড এর রিটার্ন টাইপ আর SonaliPaymentStatus এর getStatus মেথড এর রিটার্ন টাইপ এক নয়। যেহেতু এই রিটার্ন টাইপ নিয়ে পরবর্তীতে কোনো প্রসেসিং থাকতে পারে, সেহেতু এখানে শুধুমাত্র object এর instance রিপ্লেস করলেই হবেনা। এটাই LSP violation.
+
+উল্লেখ্য, এখানে আমরা base ক্লাস দিয়ে উদাহরণ দিয়েছি, তবে interface এর implementation এর ক্ষেত্রেও একই বিষয় প্রযোজ্য। একটা interface কে ইমপ্লিমেন্ট করা সকল ক্লাস ও পস্পরকে প্রতিস্থাপনযোগ্য হতে হবে।
+
+নিম্নোক্ত শর্তগুলো অনুসরণ করলে আমরা LSP violation এড়িয়ে চলতে পারবোঃ
+
+* sub-class গুলোতে base-class এর মেথড ব্যবহার করলে সেক্ষেত্রে মেথড এর input parameter type এবং সংখ্যা অবশ্যই base-class এর মেথড এর সমান হতে হবে।
+* মেথড এর রিটার্ন টাইপ একই ধরণের হতে হবে।
+* Exception টাইপ ও একই ধরণের হতে হবে।
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
